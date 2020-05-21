@@ -25,14 +25,27 @@ function ajaxEmpleado() {
   xhr.send()
 }
 
-function ajaxEmpleados() {}
+function ajaxEmpleados() {
+  let empleados;
+  const xhr = new XMLHttpRequest()
+  xhr.open('GET', 'empleados.json', true)
+  xhr.onload = function() {
+    empleados = JSON.parse(this.responseText)
+    mostrarEmpleados(empleados)
+  }
+  xhr.send()
+}
 
 function mostrarEmpleado(empleado) {
   listaEmpleado.innerHTML = templateEmpleado(empleado)
 }
 
-function mostrarEmpleados() {
-  console.log('mostrarEmpleados')
+function mostrarEmpleados(empleados) {
+  empleados.forEach(empleado => {
+    const div = document.createElement('div')
+    div.innerHTML = templateEmpleado(empleado)
+    listaEmpleados.appendChild(div)
+  })
 }
 
 function templateEmpleado(empleadoInfo) {
